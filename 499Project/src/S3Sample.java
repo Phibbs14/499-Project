@@ -39,7 +39,8 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
 
 /**
  * 
- * Test COMMIT  
+ * Test COMMIT 
+ * Test COMMIT FROM GREG
  * 
  * This sample demonstrates how to make basic requests to Amazon S3 using
  * the AWS SDK for Java.
