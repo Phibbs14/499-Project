@@ -37,6 +37,26 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 
+<<<<<<< HEAD
+=======
+/**
+ * 
+ * Test COMMIT 
+ * Test COMMIT FROM GREG
+ * 
+ * This sample demonstrates how to make basic requests to Amazon S3 using
+ * the AWS SDK for Java.
+ * <p>
+ * <b>Prerequisites:</b> You must have a valid Amazon Web Services developer
+ * account, and be signed up to use Amazon S3. For more information on
+ * Amazon S3, see http://aws.amazon.com/s3.
+ * <p>
+ * <b>Important:</b> Be sure to fill in your AWS access credentials in the
+ *                   AwsCredentials.properties file before you try to run this
+ *                   sample.
+ * http://aws.amazon.com/security-credentials
+ */
+>>>>>>> 76d2349b853cf28bebc20c8cbb044e27b14a48fa
 public class S3Sample {
 
     public static void main(String[] args) throws IOException {
