@@ -37,8 +37,6 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 
-<<<<<<< HEAD
-=======
 /**
  * 
  * Test COMMIT 
@@ -56,7 +54,6 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
  *                   sample.
  * http://aws.amazon.com/security-credentials
  */
->>>>>>> 76d2349b853cf28bebc20c8cbb044e27b14a48fa
 public class S3Sample {
 
     public static void main(String[] args) throws IOException {
