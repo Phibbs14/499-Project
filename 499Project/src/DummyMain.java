@@ -8,11 +8,21 @@ public class DummyMain {
 			System.out.println("begin!");
 			
 			FileManager m = new S3FileManager();
+			MainConverter converter = new MainConverter();
 			
 			m.pullCurrentFileList();
 			DataFile file = null;
+			
 			while ((file = m.getFileToProcess()) != null)
 			{
+				converter.convert(file);
+				if (!file.isFileConverted())
+					System.out.println("Failed to convert " + file.getFileKey());
+				else
+				{
+					System.out.println("Sucessfully converted file " + file.getFileKey());
+					System.out.println(file.getConvertedJsonArray().toJSONString().substring(0, 30));
+				}
 				processFile(file);
 			}
 			
