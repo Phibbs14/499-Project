@@ -20,7 +20,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.UUID;
+import java.util.Iterator;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
@@ -29,16 +34,11 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.ListObjectsRequest;
-import com.amazonaws.services.s3.model.ObjectListing;
-import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
 
-<<<<<<< HEAD
-=======
+
+
 /**
  * 
  * Test COMMIT 
@@ -56,10 +56,10 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
  *                   sample.
  * http://aws.amazon.com/security-credentials
  */
->>>>>>> 76d2349b853cf28bebc20c8cbb044e27b14a48fa
+
 public class S3Sample {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ParseException {
         /*
          * This credentials provider implementation loads your AWS credentials
          * from a properties file at the root of your classpath.
@@ -80,14 +80,45 @@ public class S3Sample {
 //        System.out.println("Getting Started with Amazon S3");
 //        System.out.println("===========================================\n");
 
+		JSONParser parser = new JSONParser();
+		
+		
         try {
         	System.out.println("Downloading a test input case....");
     		S3Object object2 = s3.getObject(new GetObjectRequest("InputData", "Dataset_One.json"));
     		System.out.println("\n Key for input case is: ::" + object2.getKey());
     		System.out.println("Content-Type of input data::: " + object2.getObjectMetadata().getContentType());
-    		displayTextInputStream(object2.getObjectContent());
-        	
-        	
+    		//displayTextInputStream(object2.getObjectContent());
+    		String result = getStringFromInputStream(object2.getObjectContent());
+    		
+    		//Object obj = parser.parse(object2.getObjectContent());
+    		
+    		//PRint the converted string
+    		//System.out.println(result);
+    		//try to parse the string with the JSON parser
+    		
+    		
+    		Object obj = parser.parse(result);
+    		//JSONObject jsonObject = (JSONObject) obj;
+    		JSONArray jsonArray = (JSONArray) obj;
+    		
+    		JSONObject jsonObject = (JSONObject) jsonArray.get(0);
+    		String voltageValue = (String) jsonObject.get("voltage");
+    		System.out.println("VAlue found is: " +voltageValue);
+    		
+    		/*
+    		Iterator<JSONObject> iterator = msg.iterator();
+    		
+    		String voltageValue = (String) iterator.get("voltage");
+    		while (iterator.hasNext()) {
+    			//System.out.println(iterator.next());
+    		}
+    		*/
+    		
+    		
+    		System.out.println("HERE");
+    		//System.out.println("Voltage = " +voltageValue);
+    		
             /*
              * Create a new S3 bucket - Amazon S3 bucket names are globally unique,
              * so once a bucket name has been taken by any user, you can't create
@@ -226,4 +257,33 @@ public class S3Sample {
         System.out.println();
     }
 
+ // convert InputStream to String
+ 	private static String getStringFromInputStream(InputStream is) throws IOException {
+  
+ 		BufferedReader br = null;
+ 		StringBuilder sb = new StringBuilder();
+  
+ 		String line;
+ 		try {
+  
+ 			br = new BufferedReader(new InputStreamReader(is));
+ 			while ((line = br.readLine()) != null) {
+ 				sb.append(line);
+ 			}
+  
+ 		} catch (IOException e) {
+ 			e.printStackTrace();
+ 		} finally {
+ 			if (br != null) {
+ 				try {
+ 					br.close();
+ 				} catch (IOException e) {
+ 					e.printStackTrace();
+ 				}
+ 			}
+ 		}
+  
+ 		return sb.toString();
+  
+ 	}
 }
