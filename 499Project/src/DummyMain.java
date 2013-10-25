@@ -21,7 +21,7 @@ public class DummyMain {
 				else
 				{
 					System.out.println("Sucessfully converted file " + file.getFileKey());
-					System.out.println(file.getConvertedJsonArray().toJSONString().substring(0, 30));
+					System.out.println(file.getConvertedJsonArray().toJSONString().substring(0, 100));
 				}
 				processFile(file);
 			}

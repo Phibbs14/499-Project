@@ -38,7 +38,7 @@ public class DataFile {
   
  			br = new BufferedReader(new InputStreamReader(is));
  			while ((line = br.readLine()) != null) {
- 				sb.append(line);
+ 				sb.append(line + "\n");
  			}
   
  		} catch (IOException e) {
