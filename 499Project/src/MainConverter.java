@@ -14,7 +14,7 @@ public class MainConverter {
 		converters = new ArrayList<Converter>();
 		converters.add(new JsonConverter());
 		converters.add(new CsvConverter());
-		
+		converters.add(new XmlConverter());
 	}
 	
 	public JSONArray convert(DataFile file) {
