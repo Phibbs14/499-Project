@@ -7,4 +7,14 @@ public class Ontology implements IOntology{
 		return null;
 	}
 
+	public void outputToFile(String filename) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void readFromFile(String filename) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
