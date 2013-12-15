@@ -1,3 +1,4 @@
+package fileconverters;
 /*
  * Implements the Converter interface
  * Takes a CSV file as a string and returns the corresponding JSON array 

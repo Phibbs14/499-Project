@@ -1,9 +1,17 @@
+package main;
 import java.io.IOException;
+
+import s3filecontrol.DataFile;
+import s3filecontrol.FileManager;
+import s3filecontrol.S3FileManager;
+
+import fileconverters.MainConverter;
 
 
 public class DummyMain {
 	public static void main(String[] args) throws IOException {
 		try {
+			
 //			fileTransferTest();
 			System.out.println("begin!");
 			

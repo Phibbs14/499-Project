@@ -1,6 +1,12 @@
+package fileconverters;
+
+
 import java.util.ArrayList;
 
+
 import org.json.simple.JSONArray;
+
+import s3filecontrol.DataFile;
 
 
 public class MainConverter {

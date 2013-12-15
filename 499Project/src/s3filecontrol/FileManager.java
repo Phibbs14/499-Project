@@ -1,4 +1,6 @@
+package s3filecontrol;
 import com.amazonaws.services.s3.model.S3Object;
+
 
 
 public interface FileManager {

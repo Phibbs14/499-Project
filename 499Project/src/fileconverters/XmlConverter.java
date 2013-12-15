@@ -1,3 +1,4 @@
+package fileconverters;
 /*
  * Implements the Converter interface
  * Takes a XML file as a string and returns the corresponding JSON array 
@@ -16,6 +17,7 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
 
 
 public class XmlConverter implements Converter{

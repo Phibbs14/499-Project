@@ -1,8 +1,10 @@
+package s3filecontrol;
 import java.util.Iterator;
 import java.util.List;
 
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+
 
 public class S3FileManager implements FileManager {
 	private S3FileControl s3controller;

@@ -1,3 +1,4 @@
+package fileconverters;
 /*
  * Implements the Converter interface
  * Takes a JSON file as a string and returns it as a JSONArray

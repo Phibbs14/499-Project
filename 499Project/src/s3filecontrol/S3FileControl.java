@@ -1,3 +1,4 @@
+package s3filecontrol;
 /*
  * Class that handles File Control communicating to S3
  * 
