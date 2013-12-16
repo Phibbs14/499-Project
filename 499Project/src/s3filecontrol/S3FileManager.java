@@ -2,18 +2,22 @@ package s3filecontrol;
 import java.util.Iterator;
 import java.util.List;
 
+import logging.ILogger;
+
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 
 
-public class S3FileManager implements FileManager {
+public class S3FileManager implements IFileManager {
 	private S3FileControl s3controller;
 	private List<S3ObjectSummary> listOfFiles = null;
 	private Iterator<S3ObjectSummary> currentFile;
 	private String bucketName = "InputData";
-
-	public S3FileManager() {
-		s3controller = new S3FileControl();
+	private ILogger logger;
+	
+	public S3FileManager(ILogger logger) {
+		this.logger = logger;
+		s3controller = new S3FileControl(logger);
 	}
 
 	public void pullCurrentFileList() {

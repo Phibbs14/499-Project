@@ -1,20 +1,27 @@
 package ontology;
 
-public class Ontology implements IOntology{
+import logging.ILogger;
+import s3filecontrol.HeaderValueTuple;
 
-	public IStandardEntry getStandardEntryFor(String header, String value) {
+public class Ontology implements IOntology {
+
+	public Ontology(ILogger logger) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public IStandardEntry getStandardEntryFor(HeaderValueTuple tuple) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public void outputToFile(String filename) {
+	public boolean outputToFile(String filename) {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
-	public void readFromFile(String filename) {
+	public boolean readFromFile(String filename) {
 		// TODO Auto-generated method stub
-		
+		return true;	
 	}
 
 }

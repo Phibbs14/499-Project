@@ -11,6 +11,8 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;
 
+import logging.ILogger;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -20,7 +22,11 @@ import org.json.simple.JSONObject;
 
 
 
-public class XmlConverter implements Converter{
+public class XmlConverter extends Converter{
+
+	public XmlConverter(ILogger logger) {
+		super(logger);
+	}
 
 	public boolean canConvertExtension(String extension) {
 		return extension.equalsIgnoreCase(".xml");

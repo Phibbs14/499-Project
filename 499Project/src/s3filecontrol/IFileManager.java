@@ -3,7 +3,7 @@ import com.amazonaws.services.s3.model.S3Object;
 
 
 
-public interface FileManager {
+public interface IFileManager {
 	void pullCurrentFileList();
 	DataFile getFileToProcess();
 	void moveToFailed(DataFile file);

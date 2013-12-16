@@ -16,6 +16,8 @@ import java.io.Writer;
 import java.util.List;
 import java.util.UUID;
 
+import logging.ILogger;
+
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
@@ -36,9 +38,11 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
 public class S3FileControl {
 	// AmazonS3Client.deleteObjects
 	AmazonS3 s3client;
-
+	ILogger logger;
+	
 	// Constructor
-	public S3FileControl() {
+	public S3FileControl(ILogger logger) {
+		this.logger = logger;
 		s3client = new AmazonS3Client(
 				new ClasspathPropertiesFileCredentialsProvider());
 		Region usWest2 = Region.getRegion(Regions.US_EAST_1);

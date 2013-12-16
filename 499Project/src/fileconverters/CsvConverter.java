@@ -4,10 +4,16 @@ package fileconverters;
  * Takes a CSV file as a string and returns the corresponding JSON array 
  */
 
+import logging.ILogger;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-public class CsvConverter implements Converter {
+public class CsvConverter extends Converter {
+
+	public CsvConverter(ILogger logger) {
+		super(logger);
+	}
 
 	public boolean canConvertExtension(String extension) {
 		return extension.equalsIgnoreCase(".csv");
@@ -45,7 +51,7 @@ public class CsvConverter implements Converter {
 				jsonArray.add(object);
 			}
 		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
+			logger.logException(ex);
 		}
 
 		return jsonArray;

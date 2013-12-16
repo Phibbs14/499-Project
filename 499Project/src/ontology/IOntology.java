@@ -1,7 +1,9 @@
 package ontology;
 
+import s3filecontrol.HeaderValueTuple;
+
 public interface IOntology {
-	IStandardEntry getStandardEntryFor(String header, String value);
-	void outputToFile(String filename);
-	void readFromFile(String filename);
+	IStandardEntry getStandardEntryFor(HeaderValueTuple tuple);
+	boolean outputToFile(String filename);
+	boolean readFromFile(String filename);
 }
