@@ -20,7 +20,7 @@ public class ParserFactory implements IParserFactory {
 	}
 
 	public boolean initializeComponents() {
-		return ontology.readFromFile("");
+		return ontology.readFromFile("standardizedValueHashMap.json");
 	}
 	
 	public boolean parseFile(IParsingFile dataFile) {
