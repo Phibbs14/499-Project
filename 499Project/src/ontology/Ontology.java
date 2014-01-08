@@ -11,6 +11,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import s3filecontrol.S3FileReader;
 import s3filecontrol.HeaderValueTuple;
 
 import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
@@ -59,23 +60,10 @@ public class Ontology implements IOntology {
 	}
 
 	public boolean readFromFile(String filename) {
-		
-		AmazonS3 s3 = new AmazonS3Client(new ClasspathPropertiesFileCredentialsProvider());
-		Region usWest2 = Region.getRegion(Regions.US_EAST_1);
-		s3.setRegion(usWest2);
-		String result = "";
-		
-		try {
-    		S3Object object2 = s3.getObject(new GetObjectRequest("OntologyData", filename));
-    		
-    		//save file contents in the string called result
-    		result = getStringFromInputStream(object2.getObjectContent());
-    		
-		} catch (Exception e) {
-			logger.logException(e);
-			return false;
-		}
-	
+
+		//Read file contents
+		S3FileReader fileReader = new S3FileReader(logger, "OntologyData", filename);
+		String result = fileReader.getFileAsString();
 		try {
 			JSONParser parser = new JSONParser();
 			Object obj = parser.parse(result);
@@ -89,36 +77,5 @@ public class Ontology implements IOntology {
 		
 		return true;	
 	}
-	
-	//Need this method for reading file from S3
-		private static String getStringFromInputStream(InputStream is) throws IOException {
-			  
-	 		BufferedReader br = null;
-	 		StringBuilder sb = new StringBuilder();
-	  
-	 		String line;
-	 		try {
-	  
-	 			br = new BufferedReader(new InputStreamReader(is));
-	 			while ((line = br.readLine()) != null) {
-	 				sb.append(line);
-	 			}
-	  
-	 		} catch (IOException e) {
-	 			e.printStackTrace();
-	 		} finally {
-	 			if (br != null) {
-	 				try {
-	 					br.close();
-	 				} catch (IOException e) {
-	 					e.printStackTrace();
-	 				}
-	 			}
-	 		}
-	  
-	 		return sb.toString();
-	  
-	 	}
-
 
 }
