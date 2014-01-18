@@ -1,26 +1,13 @@
 package ontology;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import logging.ILogger;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import s3filecontrol.S3FileReader;
 import s3filecontrol.HeaderValueTuple;
-
-import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
-import com.amazonaws.regions.Region;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
+import s3filecontrol.S3FileReader;
 
 public class Ontology implements IOntology {
 
@@ -36,11 +23,10 @@ public class Ontology implements IOntology {
 
 	public IStandardEntry getStandardEntryFor(HeaderValueTuple tuple) {
 		
-		//readFromFile("standardizedValueHashMap.json");
+		logger.logEvent("The header value being searched in hashmap is: "+tuple.getHeader().toLowerCase());
 		
-		logger.logEvent("The header value being searched in hashmap is: "+tuple.getHeader());
-		//use the header value to as key to find the standardized header value that will be used
-		String standardHeader = (String) hashmapForStandardHeader.get(tuple.getHeader());
+		//use the header value as key to find the standardized header value that will be used
+		String standardHeader = (String) hashmapForStandardHeader.get(tuple.getHeader().toLowerCase());
 		
 		//Check to see if a standard header value was found in the hash map. If it's found then create a StandardEntry object for it.
 		if (standardHeader != null) {
