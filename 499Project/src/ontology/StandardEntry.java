@@ -2,24 +2,26 @@ package ontology;
 
 import s3filecontrol.HeaderValueTuple;
 
-public class StandardEntry implements IStandardEntry, IStandardEntryConverter {
+public class StandardEntry implements IStandardEntry {
 	private String standardHeader;
 	
 	public StandardEntry(String header) {
 		standardHeader = header;
 	}
 	
+	// !!! Need to implement the check for conversion, Ex: KV to V
+	
 	public IStandardEntryConverter getConverter(HeaderValueTuple tuple) {
-		// This can return itself, or a metric converter if it needs to convert the value
-		// example if header = kV, we might want to convert to V
-		// but for Volt, Voltage, or Volts, we can just return this
-		
-		// TODO Auto-generated method stub
-		return this;
+		if (NumberCheck.containsNumber(tuple.getHeader()))
+			return new BasicConverter(
+					NumberCheck.getHeaderWithoutNumber(tuple.getHeader()),
+					NumberCheck.getNumber(tuple.getHeader()));
+		else
+			return new BasicConverter(standardHeader);
 	}
-
-	public HeaderValueTuple convert(HeaderValueTuple original) {
-		return new HeaderValueTuple(standardHeader, original.getValue());
+	
+	public IStandardEntryConverter getConverter(HeaderValueTuple tuple, int index) {
+		return new BasicConverter(standardHeader, index);
 	}
 
 }

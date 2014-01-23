@@ -1,11 +1,13 @@
 package parser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import logging.ILogger;
 import ontology.IOntology;
 import ontology.IStandardEntry;
 import ontology.IStandardEntryConverter;
+import ontology.NumberCheck;
 import ontology.Ontology;
 import s3filecontrol.HeaderValueTuple;
 import s3filecontrol.IParsingFile;
@@ -43,21 +45,37 @@ public class ParserFactory implements IParserFactory {
 	private ArrayList<IStandardEntryConverter> parseSet(ArrayList<HeaderValueTuple> set) {
 		ArrayList<IStandardEntry> standardEntryList = new ArrayList<IStandardEntry>();
 		ArrayList<IStandardEntryConverter> converters = new ArrayList<IStandardEntryConverter>();
+		int[] indexCounter = new int[set.size()];
 		
-		for (HeaderValueTuple tuple : set) {
-			// handle numbers in the header
-			
+		
+		for (int i = 0; i < set.size(); ++i) {
+			HeaderValueTuple tuple = set.get(i);
+		
 			IStandardEntry ret = ontology.getStandardEntryFor(tuple);
 			if (ret == null) {
 				logger.logError("Failed to find a match for " + tuple);
 				return null;
 			}
 			
-			if (standardEntryList.contains(ret)) { // handle multiple (OK if numbers in header ^^)
+			if (standardEntryList.contains(ret)) { 
+				int index = standardEntryList.indexOf(ret);
+				IStandardEntryConverter converter = converters.get(index);
 				
+				if (!converter.hasIndexBeenSet())
+					converter.setIndex(1);
+				indexCounter[index]++;
+				
+				int currentIndex = indexCounter[i];
+				
+				if (NumberCheck.containsNumber(tuple.getHeader()))
+					converter = ret.getConverter(tuple);
+				else
+					converter = ret.getConverter(tuple, currentIndex);
+				converters.add(converter);
 			} else {
 				standardEntryList.add(ret);
 				converters.add(ret.getConverter(tuple));
+				indexCounter[i]++;
 			}
 		}
 		return converters;

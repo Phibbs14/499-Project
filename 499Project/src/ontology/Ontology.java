@@ -21,11 +21,8 @@ public class Ontology implements IOntology {
 	public Ontology(ILogger logger) {
 		this.logger = logger;
 	}
-
 	
-
 	public IStandardEntry getStandardEntryFor(HeaderValueTuple tuple) {
-		
 		logger.logEvent("The header value being searched in hashmap is: "+tuple.getHeader().toLowerCase());
 		
 		//use the header value as key to find the standardized header value that will be used
@@ -39,24 +36,18 @@ public class Ontology implements IOntology {
 		} else {
 			// Couldn't find header in the ontology file
 			//Case 1: Check if there is a number at the end of the value
-			if (tuple.getHeader().matches("[a-z, A-Z]+[0-9]+")) {
+			if (NumberCheck.containsNumber(tuple.getHeader())) {
 				logger.logEvent("Value has a number in it! :" +tuple.getHeader());
-				Pattern p1 = Pattern.compile("[a-z, A-Z]+");
-				Matcher m = p1.matcher(tuple.getHeader());
-				if (m.find()) {
-					//Get the base header and look in the file once again for a match
-					standardHeader = (String) hashmapForStandardHeader.get(m.group(0).toLowerCase());			//g.group(0) will get the the header value without the number at the end
-					int endOfHeaderNameIndex = m.end();		//Char position of the end of the header name before the number
-					
-					if (standardHeader != null) {
-						String headerNameNumberValue = tuple.getHeader().substring(endOfHeaderNameIndex);			//get the integer value at the end of the incoming header value
-						standardHeader = standardHeader.concat(headerNameNumberValue);
-						//Create the new std entry with the number value appended to the standized header value
-						IStandardEntry stdEntry = new StandardEntry(standardHeader);
-						logger.logEvent("Creating new standardEntry for : " + standardHeader);
-						return stdEntry;
-					}
-					
+				
+				standardHeader = (String) hashmapForStandardHeader.get(NumberCheck.getHeaderWithoutNumber(tuple.getHeader()));
+				
+				if (standardHeader != null) {
+					//String headerNameNumberValue = tuple.getHeader().substring(endOfHeaderNameIndex);			//get the integer value at the end of the incoming header value
+					//standardHeader = standardHeader.concat(headerNameNumberValue);
+					//Create the new std entry with the number value appended to the standized header value
+					IStandardEntry stdEntry = new StandardEntry(standardHeader);
+					logger.logEvent("Creating new standardEntry for : " + standardHeader);
+					return stdEntry;
 				}
 			}
 		}
