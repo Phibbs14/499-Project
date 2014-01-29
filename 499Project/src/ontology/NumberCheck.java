@@ -13,6 +13,8 @@ public class NumberCheck {
 	
 	// Return the first set of characters before anything else appears
 	public static String getHeaderWithoutNumber(String str) {
+		if (!containsNumber(str))
+			return str;
 		Pattern p1 = Pattern.compile("[a-z, A-Z]+");
 		Matcher m = p1.matcher(str);
 		

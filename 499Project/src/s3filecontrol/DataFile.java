@@ -118,20 +118,35 @@ public class DataFile implements IParsingFile {
 		Unprocessed, Processing, Processed, Failed
 	}
 
+	// IParsingFile
 	public ArrayList<HeaderValueTuple> getFirstSet() {
 		try {
 			if (jsonArray == null || jsonArray.size() == 0)
 				return null;
 
 			JSONObject firstSet = (JSONObject) jsonArray.get(0);
-
+			
 			ArrayList<HeaderValueTuple> list = new ArrayList<HeaderValueTuple>();
-
+			
 			for (Object key : firstSet.keySet())
 				list.add(new HeaderValueTuple(key.toString(), firstSet.get(key).toString()));
 			return list;
 		} catch (Exception ex) {
 			return null;
 		}
+	}
+	
+	public FileIterator getFileIterator() {
+		if (jsonArray == null)
+			return null;
+		return new JsonFileIterator(jsonArray);
+	}
+	
+	public void setStandardJsonArray(JSONArray jarray) {
+		standardJsonArray = jarray;
+	}
+	
+	public JSONArray getStandardJsonArray() {
+		return standardJsonArray;
 	}
 }

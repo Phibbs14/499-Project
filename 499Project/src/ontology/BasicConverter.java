@@ -10,11 +10,6 @@ public class BasicConverter implements IStandardEntryConverter {
 		standardHeader = header;
 	}
 	
-	public BasicConverter(String header, int index) {
-		this(header);
-		this.index = index;
-	}
-	
 	public HeaderValueTuple convert(HeaderValueTuple original) {
 		return new HeaderValueTuple(getHeader(), original.getValue());
 	}

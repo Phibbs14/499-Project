@@ -40,7 +40,10 @@ public class DummyMain {
 					logger.logEvent("Sucessfully converted file " + file.getFileKey());
 					logger.logEvent(file.getConvertedJsonArray().toJSONString().substring(0, 100));
 					logger.logEvent("Starting file standardization");
-					parserFactory.parseFile(file);
+					if (parserFactory.parseFile(file))
+						logger.logEvent("Standardization complete: " + file.getStandardJsonArray().toJSONString().substring(0, 100));
+					else
+						logger.logEvent("Standardization failed.");
 				}
 				processFile(file);
 			}

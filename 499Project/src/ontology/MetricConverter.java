@@ -3,21 +3,16 @@ package ontology;
 import s3filecontrol.HeaderValueTuple;
 
 public class MetricConverter extends BasicConverter {
-
-	public MetricConverter(String header) {
-		super(header);
-	}
+	private double multiplierFactor;
 	
-	public MetricConverter(String header, int index) {
-		super(header, index);
+	public MetricConverter(String header, double factor) {
+		super(header);
+		multiplierFactor = factor;
 	}
 
 	public HeaderValueTuple convert(HeaderValueTuple original) {
 		double value = original.getValueAsDouble();
-		
-		// convert value
-		
-		return new HeaderValueTuple(getHeader(), value + "");
+		return new HeaderValueTuple(getHeader(), value * multiplierFactor + "");
 	}
 
 	

@@ -1,7 +1,6 @@
 package parser;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import logging.ILogger;
 import ontology.IOntology;
@@ -9,6 +8,11 @@ import ontology.IStandardEntry;
 import ontology.IStandardEntryConverter;
 import ontology.NumberCheck;
 import ontology.Ontology;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import s3filecontrol.FileIterator;
 import s3filecontrol.HeaderValueTuple;
 import s3filecontrol.IParsingFile;
 
@@ -22,7 +26,7 @@ public class ParserFactory implements IParserFactory {
 	}
 
 	public boolean initializeComponents() {
-		return ontology.readFromFile("standardizedValueHashMap.json");
+		return ontology.readFromFile("standardizedValueHashMap2.json");
 	}
 	
 	public boolean parseFile(IParsingFile dataFile) {
@@ -32,10 +36,31 @@ public class ParserFactory implements IParserFactory {
 			if (converters == null)
 				return false;
 			
-			// conveter.converter(tuple)
-						
+			FileIterator iterator = dataFile.getFileIterator();
+			JSONArray array = new JSONArray();
+			
+			logger.logEvent("Starting conversion");
+			
+			while (iterator.hasNext()) {
+				int i = 0;
+				for (HeaderValueTuple tuple : iterator.next()) {
+					JSONObject obj = new JSONObject();
+					
+					tuple = converters.get(i).convert(tuple);
+					
+					obj.put(tuple.getHeader(), tuple.getValue());
+					array.add(obj);
+					i++;
+				}
+			}
+			
+			dataFile.setStandardJsonArray(array);
+			
+			logger.logEvent("Conversion complete");
+			
 			
 		} catch (Exception ex) {
+			logger.logEvent("AAHH");
 			logger.logException(ex);
 			return false;
 		}
