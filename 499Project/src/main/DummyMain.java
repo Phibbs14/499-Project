@@ -45,7 +45,7 @@ public class DummyMain {
 					else
 						logger.logEvent("Standardization failed.");
 				}
-				processFile(file);
+				file.setProcessed();
 			}
 			
 			logger.logEvent("Session Complete");
@@ -78,15 +78,5 @@ public class DummyMain {
 		}
 		
 		System.out.println("Done");
-	}
-	
-	public static void processFile(DataFile file) {
-		// Check file type (extension of key)
-		// Setting file to processing may not be necessary
-		// convert if necessary
-		// run natural language processing
-		// send to elastic search
-		// move file to processed
-		// move to failed if something goes wrong
 	}
 }
