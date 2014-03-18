@@ -43,15 +43,15 @@ public class ParserFactory implements IParserFactory {
 			
 			while (iterator.hasNext()) {
 				int i = 0;
+				JSONObject obj = new JSONObject();
 				for (HeaderValueTuple tuple : iterator.next()) {
-					JSONObject obj = new JSONObject();
 					
 					tuple = converters.get(i).convert(tuple);
 					
 					obj.put(tuple.getHeader(), tuple.getValue());
-					array.add(obj);
 					i++;
 				}
+				array.add(obj);
 			}
 			
 			dataFile.setStandardJsonArray(array);
